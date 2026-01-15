@@ -16,6 +16,6 @@ public class CustomerEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Cart cart;
 }

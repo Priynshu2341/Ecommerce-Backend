@@ -7,6 +7,6 @@ import lombok.Data;
 @Embeddable
 public class Rating {
 
-    private Integer stars;
+    private Double stars;
     private Integer count;
 }

@@ -13,6 +13,7 @@ public class Product {
 
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @Column(nullable = false)
