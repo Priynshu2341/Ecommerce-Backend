@@ -1,9 +1,12 @@
 package com.example.ecommerce.controller;
 
 import com.example.ecommerce.dto.OrderDTO;
+import com.example.ecommerce.repository.CustomerRepository;
 import com.example.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private  final CustomerRepository customerRepository;
 
     @GetMapping("/{customer/customerId}")
     public ResponseEntity<List<OrderDTO>> getOrdersByCustomer(@PathVariable Integer customerId) {
@@ -26,9 +30,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderByOrderId(orderId));
     }
 
-    @PostMapping("/checkout/{customerID}")
-    public ResponseEntity<OrderDTO> checkout(@PathVariable Integer customerID) {
-        return ResponseEntity.ok(orderService.checkout(customerID));
+    @PostMapping("/checkout")
+    public ResponseEntity<OrderDTO> checkout(Authentication auth) {
+        String email = auth.getName();
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        return ResponseEntity.ok(orderService.checkout(customer.getId()));
     }
 
 }
