@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Embeddable
-@Table(name = "ratings")
 public class Rating {
 
     private Double stars;

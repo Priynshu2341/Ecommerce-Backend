@@ -4,17 +4,16 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 
 import java.util.Date;
 
 @Component
 public class JwtUtility {
 
-    private static final String SECRET_KEY = "This is Another of the secret key used for jwt ";
+    private static final String SECRET_KEY = "a_very_long_random_secret_key_that_is_at_least_32_bytes_long_123456 ";
 
 
     public  String generateToken(UserDetails userDetails) {

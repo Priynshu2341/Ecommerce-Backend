@@ -6,7 +6,9 @@ import com.example.ecommerce.entity.customer.CustomerEntity;
 import com.example.ecommerce.entity.product.Product;
 import com.example.ecommerce.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class CartUtils {
 

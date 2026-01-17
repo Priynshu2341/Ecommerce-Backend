@@ -2,54 +2,70 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.dto.AddToCartDTO;
 import com.example.ecommerce.dto.CartDTO;
+import com.example.ecommerce.repository.CustomerRepository;
 import com.example.ecommerce.service.CartItemService;
 import com.example.ecommerce.service.CartService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartController {
 
     private final CartService cartService;
     private final CartItemService cartItemService;
+    private final CustomerRepository customerRepository;
 
 
-    @GetMapping("/{customerId}")
-    public CartDTO getCart(@PathVariable Integer customerId) {
-        return cartService.getCart(customerId);
+    @GetMapping()
+    public CartDTO getCart(Authentication auth) {
+        String email = auth.getName();
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(()-> new EntityNotFoundException("Customer not found"));
+        return cartService.getCart(customer.getId());
     }
 
 
-    @PostMapping("/{customerId}/items")
+    @PostMapping("/items")
     public CartDTO addToCart(
-            @PathVariable Integer customerId,
+            Authentication auth,
             @RequestParam UUID productId,
             @Valid @RequestBody AddToCartDTO request
     ) {
-        return cartService.addToCart(customerId, productId, request.quantity());
+        String email = auth.getName();
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(()-> new EntityNotFoundException("Customer not found"));
+        return cartService.addToCart(customer.getId(), productId, request.quantity());
     }
 
 
-    @PutMapping("/{customerId}/items/{productId}")
+    @PutMapping("//items/{productId}")
     public CartDTO updateCartItem(
-            @PathVariable Integer customerId,
+            Authentication auth,
             @PathVariable UUID productId,
             @RequestParam int quantity
     ) {
-        return cartItemService.updateCartItem(customerId, productId, quantity);
+        String email = auth.getName();
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(()-> new EntityNotFoundException("Customer not found"));
+        return cartItemService.updateCartItem(customer.getId(), productId, quantity);
     }
 
 
-    @DeleteMapping("/{customerId}/items/{productId}")
+    @DeleteMapping("//items/{productId}")
     public CartDTO removeCartItem(
-            @PathVariable Integer customerId,
+            Authentication auth,
             @PathVariable UUID productId
     ) {
-        return cartItemService.removeCartItem(customerId, productId);
+        String email = auth.getName();
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(()-> new EntityNotFoundException("Customer not found"));
+        return cartItemService.removeCartItem(customer.getId(), productId);
     }
 }

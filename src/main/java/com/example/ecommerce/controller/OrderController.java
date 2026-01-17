@@ -19,13 +19,17 @@ public class OrderController {
     private final OrderService orderService;
     private  final CustomerRepository customerRepository;
 
-    @GetMapping("/{customer/customerId}")
-    public ResponseEntity<List<OrderDTO>> getOrdersByCustomer(@PathVariable Integer customerId) {
-       return ResponseEntity.ok(orderService.getOrderByCustomerId(customerId));
+    @GetMapping("/customer")
+    public ResponseEntity<List<OrderDTO>> getOrdersByCustomer(Authentication auth) {
+        String email = auth.getName();
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        return ResponseEntity.ok(orderService.getOrderByCustomerId(customer.getId()));
 
     }
 
-    @GetMapping("/{order/orderId}")
+    @GetMapping("/order/{orderId}")
     public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
         return ResponseEntity.ok(orderService.getOrderByOrderId(orderId));
     }

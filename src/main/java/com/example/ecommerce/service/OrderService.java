@@ -5,6 +5,7 @@ import com.example.ecommerce.entity.cart.CartItem;
 import com.example.ecommerce.entity.customer.CustomerEntity;
 import com.example.ecommerce.entity.order.Order;
 import com.example.ecommerce.entity.order.OrderItem;
+import com.example.ecommerce.entity.order.OrderStatus;
 import com.example.ecommerce.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class OrderService {
 
         Order order = new Order();
         order.setCustomer(customer);
-        order.setOrderStatus(CustomerEntity.OrderStatus.CREATED);
+        order.setOrderStatus(OrderStatus.CREATED);
 
 
         List<OrderItem> orderItems = cartItems.stream()

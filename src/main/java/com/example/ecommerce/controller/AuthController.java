@@ -9,6 +9,7 @@ import com.example.ecommerce.repository.CustomerRepository;
 import com.example.ecommerce.security.CustomerUserDetailService;
 import com.example.ecommerce.security.JwtUtility;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public void Register(@RequestBody CustomerRegisterRequestDTO request) {
+    public ResponseEntity<String> Register(@RequestBody CustomerRegisterRequestDTO request) {
 
        var customer = CustomerEntity.builder()
                 .email(request.email())
@@ -42,6 +43,7 @@ public class AuthController {
                 .build();
 
        customerRepository.save(customer);
+       return ResponseEntity.ok("Register successfully");
 
     }
 
