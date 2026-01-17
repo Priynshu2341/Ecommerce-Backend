@@ -1,13 +1,11 @@
 package com.example.ecommerce.service;
 
-import com.example.ecommerce.entity.Cart;
-import com.example.ecommerce.entity.CartItem;
-import com.example.ecommerce.entity.CustomerEntity;
-import com.example.ecommerce.entity.Product;
+import com.example.ecommerce.entity.cart.Cart;
+import com.example.ecommerce.entity.cart.CartItem;
+import com.example.ecommerce.entity.customer.CustomerEntity;
+import com.example.ecommerce.entity.product.Product;
 import com.example.ecommerce.repository.CartRepository;
-import com.example.ecommerce.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 public class CartUtils {

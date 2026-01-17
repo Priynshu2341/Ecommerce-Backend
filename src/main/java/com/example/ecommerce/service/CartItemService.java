@@ -1,7 +1,6 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.dto.CartDTO;
-import com.example.ecommerce.entity.CartItem;
 import com.example.ecommerce.repository.CartItemRepository;
 import com.example.ecommerce.repository.CartRepository;
 import com.example.ecommerce.repository.CustomerRepository;

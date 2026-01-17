@@ -2,13 +2,12 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.dto.CartDTO;
 import com.example.ecommerce.dto.CartItemDTO;
-import com.example.ecommerce.entity.Cart;
-import com.example.ecommerce.entity.CartItem;
+import com.example.ecommerce.entity.cart.Cart;
+import com.example.ecommerce.entity.cart.CartItem;
 import com.example.ecommerce.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.Serial;
 import java.util.List;
 
 @Service

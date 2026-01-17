@@ -2,7 +2,7 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.dto.ProductDTO;
 import com.example.ecommerce.dto.RatingDTO;
-import com.example.ecommerce.entity.Product;
+import com.example.ecommerce.entity.product.Product;
 import org.springframework.stereotype.Service;
 
 @Service

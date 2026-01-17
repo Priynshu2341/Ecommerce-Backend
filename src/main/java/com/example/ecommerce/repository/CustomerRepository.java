@@ -1,6 +1,6 @@
 package com.example.ecommerce.repository;
 
-import com.example.ecommerce.entity.CustomerEntity;
+import com.example.ecommerce.entity.customer.CustomerEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

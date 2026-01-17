@@ -1,9 +1,7 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.dto.ProductDTO;
-import com.example.ecommerce.entity.Product;
 import com.example.ecommerce.repository.ProductRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

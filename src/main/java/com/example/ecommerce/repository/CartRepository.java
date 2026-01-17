@@ -1,6 +1,6 @@
 package com.example.ecommerce.repository;
 
-import com.example.ecommerce.entity.Cart;
+import com.example.ecommerce.entity.cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

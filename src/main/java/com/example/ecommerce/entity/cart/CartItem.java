@@ -1,11 +1,17 @@
-package com.example.ecommerce.entity;
+package com.example.ecommerce.entity.cart;
 
+import com.example.ecommerce.entity.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "cart_items")
 public class CartItem {
 
 

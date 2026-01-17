@@ -1,10 +1,16 @@
-package com.example.ecommerce.entity;
+package com.example.ecommerce.entity.customer;
 
+import com.example.ecommerce.entity.cart.Cart;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "customers")
 public class CustomerEntity {
 
     @Id
@@ -16,6 +22,14 @@ public class CustomerEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Cart cart;
+
+
 }

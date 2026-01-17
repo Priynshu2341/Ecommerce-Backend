@@ -1,8 +1,10 @@
 package com.example.ecommerce.controller;
 
+import com.example.ecommerce.dto.AddToCartDTO;
 import com.example.ecommerce.dto.CartDTO;
 import com.example.ecommerce.service.CartItemService;
 import com.example.ecommerce.service.CartService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +29,9 @@ public class CartController {
     public CartDTO addToCart(
             @PathVariable Integer customerId,
             @RequestParam UUID productId,
-            @RequestParam int quantity
+            @Valid @RequestBody AddToCartDTO request
     ) {
-        return cartService.addToCart(customerId, productId, quantity);
+        return cartService.addToCart(customerId, productId, request.quantity());
     }
 
 
