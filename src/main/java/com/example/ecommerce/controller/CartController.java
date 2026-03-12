@@ -45,7 +45,7 @@ public class CartController {
     }
 
 
-    @PutMapping("//items/{productId}")
+    @PutMapping("/items/{productId}")
     public CartDTO updateCartItem(
             Authentication auth,
             @PathVariable UUID productId,
@@ -58,7 +58,7 @@ public class CartController {
     }
 
 
-    @DeleteMapping("//items/{productId}")
+    @DeleteMapping("/items/{productId}")
     public CartDTO removeCartItem(
             Authentication auth,
             @PathVariable UUID productId

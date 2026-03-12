@@ -36,6 +36,10 @@ public class CartMapper {
                .mapToInt(i-> i.priceCents() * i.quantity())
                .sum();
 
-       return new CartDTO(cart.getId(),itemDTOS,total);
+        int totalItems = itemDTOS.stream()
+                .mapToInt(CartItemDTO::quantity)
+                .sum();
+
+       return new CartDTO(cart.getId(),itemDTOS,total,totalItems);
     }
 }
