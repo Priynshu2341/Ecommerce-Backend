@@ -3,9 +3,7 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.dto.ProductDTO;
 import com.example.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +15,12 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/all")
-    private List<ProductDTO> findAll() {
+    public List<ProductDTO> findAll() {
         return productService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<ProductDTO> findByProductName(@RequestParam String productName) {
+        return productService.findBySearch(productName);
     }
 }

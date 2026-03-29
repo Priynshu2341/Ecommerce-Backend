@@ -3,9 +3,9 @@ spring:
     name: Ecommerce
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASS}
+    url: ${DB_URL:jdbc:postgresql://dpg-d6pjehtactks73eefso0-a.singapore-postgres.render.com:5432/ecommerce_jzwe}
+    username: ${DB_USER:venom}
+    password: ${DB_PASS:5N2XMNvjMoUed72nxC2Kwy3qojORDz6n}
     driver-class-name: org.postgresql.Driver
 
   jpa:

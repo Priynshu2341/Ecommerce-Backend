@@ -1,6 +1,7 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.dto.ProductDTO;
+import com.example.ecommerce.entity.product.Product;
 import com.example.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,18 @@ public class ProductService {
                 .map(productMapper::toProductDTO)
                 .toList();
 
+    }
+
+    public  List<ProductDTO> findBySearch(String productName) {
+
+        if (productName == null || productName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Search term cannot be empty");
+        }
+
+        List<Product> product = productRepository.searchProducts(productName);
+
+        return product.stream()
+                .map(productMapper::toProductDTO)
+                .toList();
     }
 }
