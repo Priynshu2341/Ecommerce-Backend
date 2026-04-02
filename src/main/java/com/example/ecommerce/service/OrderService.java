@@ -67,6 +67,7 @@ public class OrderService {
         return orderMapper.toOrderDTO(order);
     }
 
+
     public List<OrderDTO> getOrderByCustomerId(Integer customerId) {
         var customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));

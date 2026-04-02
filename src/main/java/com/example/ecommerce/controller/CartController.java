@@ -2,15 +2,20 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.dto.AddToCartDTO;
 import com.example.ecommerce.dto.CartDTO;
+import com.example.ecommerce.entity.cart.Cart;
+import com.example.ecommerce.entity.customer.CustomerEntity;
 import com.example.ecommerce.repository.CustomerRepository;
 import com.example.ecommerce.service.CartItemService;
 import com.example.ecommerce.service.CartService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -68,4 +73,8 @@ public class CartController {
                 .orElseThrow(()-> new EntityNotFoundException("Customer not found"));
         return cartItemService.removeCartItem(customer.getId(), productId);
     }
+
+
+
 }
+

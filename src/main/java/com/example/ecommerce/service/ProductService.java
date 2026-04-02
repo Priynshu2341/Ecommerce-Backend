@@ -4,6 +4,9 @@ import com.example.ecommerce.dto.ProductDTO;
 import com.example.ecommerce.entity.product.Product;
 import com.example.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +38,10 @@ public class ProductService {
         return product.stream()
                 .map(productMapper::toProductDTO)
                 .toList();
+    }
+
+    public Page<ProductDTO> findAllPage(int  page, int size) {
+        var pageable = PageRequest.of(page, size);
+        return productRepository.findAll(pageable).map(productMapper::toProductDTO);
     }
 }
