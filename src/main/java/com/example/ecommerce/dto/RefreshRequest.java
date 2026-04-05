@@ -1,7 +1,6 @@
 package com.example.ecommerce.dto;
 
-public record AuthResponse(
-        String accessToken,
+public record RefreshRequest(
         String refreshToken
 ) {
 }

@@ -1,14 +1,13 @@
 package com.example.ecommerce.controller;
 
-import com.example.ecommerce.dto.AuthResponse;
-import com.example.ecommerce.dto.CustomerRegisterRequestDTO;
-import com.example.ecommerce.dto.LoginRequestDTO;
+import com.example.ecommerce.dto.*;
 import com.example.ecommerce.entity.customer.CustomerEntity;
 import com.example.ecommerce.entity.customer.Role;
 import com.example.ecommerce.repository.CustomerRepository;
 import com.example.ecommerce.security.CustomerUserDetailService;
 import com.example.ecommerce.security.JwtUtility;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,8 +51,28 @@ public class AuthController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
         var user = userDetailsService.loadUserByUsername(request.email());
 
-        String token = jwtUtil.generateToken(user);
+        String accessToken = jwtUtil.generateAccessToken(user);
+        String refreshToken = jwtUtil.generateRefreshToken(user);
 
-        return new AuthResponse(token);
+        return new AuthResponse(accessToken,refreshToken);
+    }
+
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthRefreshResponse> refreshToken(@RequestBody RefreshRequest request) {
+        var token = request.refreshToken();
+        if (!jwtUtil.isRefreshTokenValid(token)) {
+           return ResponseEntity.status(401).build();
+       }
+
+        var username = jwtUtil.extractUsername(token);
+        var user = userDetailsService.loadUserByUsername(username);
+        String newAccessToken = jwtUtil.generateAccessToken(user);
+
+       return ResponseEntity.ok(new AuthRefreshResponse(newAccessToken));
+
+
     }
 }
+
+
