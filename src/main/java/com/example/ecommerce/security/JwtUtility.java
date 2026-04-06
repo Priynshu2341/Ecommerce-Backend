@@ -16,7 +16,7 @@ public class JwtUtility {
             "a_very_long_random_secret_key_that_is_at_least_32_bytes_long_123456";
 
 
-    private static final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 15;
+    private static final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 7 ;
 
 
     private static final long REFRESH_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 7;

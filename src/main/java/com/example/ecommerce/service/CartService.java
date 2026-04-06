@@ -9,6 +9,7 @@ import com.example.ecommerce.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,6 @@ public class CartService {
     private final ProductRepository productRepository;
     private final CartMapper cartMapper;
 
-
     @Transactional
     public CartDTO addToCart(Integer customerId, UUID productId, int quantity) {
 
@@ -35,22 +35,37 @@ public class CartService {
         }
 
         var customer = customerRepository.findById(customerId)
-                .orElseThrow(()-> new EntityNotFoundException("Customer not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
 
         var cart = cartRepository.findByCustomerId(customer.getId())
-                .orElseGet(()-> cartUtils.createCart(customer));
+                .orElseGet(() -> cartUtils.createCart(customer));
 
         var product = productRepository.findById(productId)
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
-        var cartItem = cartItemRepository.findByCartAndProduct(cart, product)
-                .orElseGet(()-> cartUtils.createCartItem(product, cart));
+        try {
 
-        cartItem.setQuantity(cartItem.getQuantity() + quantity);
-        cartItemRepository.save(cartItem);
+            var cartItem = cartItemRepository.findByCartAndProduct(cart, product)
+                    .orElseGet(() -> {
+                        var newItem = cartUtils.createCartItem(product, cart);
+                        newItem.setQuantity(0);
+                        return newItem;
+                    });
+
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+
+            cartItemRepository.save(cartItem);
+
+        } catch (DataIntegrityViolationException e) {
+
+            var existing = cartItemRepository.findByCartAndProduct(cart, product)
+                    .orElseThrow();
+
+            existing.setQuantity(existing.getQuantity() + quantity);
+            cartItemRepository.save(existing);
+        }
+
         return cartMapper.toCartDTO(cart);
-
-
     }
 
 
