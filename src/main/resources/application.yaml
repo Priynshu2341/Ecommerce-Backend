@@ -1,24 +1,38 @@
 spring:
   main:
-    lazy-initialization: true
+    lazy-initialization: true                     # Important
 
   application:
     name: Ecommerce
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://dpg-d6pjehtactks73eefso0-a.singapore-postgres.render.com:5432/ecommerce_jzwe}
-    username: ${DB_USER:venom}
-    password: ${DB_PASS:5N2XMNvjMoUed72nxC2Kwy3qojORDz6n}
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: false
+    show-sql: true
     open-in-view: true
-    properties:
-      hibernate:
-        format_sql: false
+
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      username: default
+      password: ${REDIS_PASSWORD}
+      timeout: 10s
+      lettuce:
+          pool:
+            max-active: 8
+            max-idle: 8
+            min-idle: 2
+
+  cache:
+    type: redis
 
 server:
   port: ${PORT:8080}

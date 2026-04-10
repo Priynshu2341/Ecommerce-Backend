@@ -2,8 +2,10 @@ package com.example.ecommerce.service;
 
 import com.example.ecommerce.dto.ProductDTO;
 import com.example.ecommerce.entity.product.Product;
+import com.example.ecommerce.redis.ProductListResponse;
 import com.example.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,11 +21,13 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
+
     public List<ProductDTO> findAll() {
         return productRepository.findAll()
                 .stream()
                 .map(productMapper::toProductDTO)
                 .toList();
+
 
     }
 
@@ -40,8 +44,16 @@ public class ProductService {
                 .toList();
     }
 
-    public Page<ProductDTO> findAllPage(int  page, int size) {
+    @Cacheable(value = "pagedProducts2",key = "#page + '-' + #size")
+    public ProductListResponse findAllPage(int  page, int size) {
         var pageable = PageRequest.of(page, size);
-        return productRepository.findAll(pageable).map(productMapper::toProductDTO);
+        var pageResult = productRepository.findAll(pageable);
+
+        var list = pageResult.getContent()
+                .stream()
+                .map(productMapper::toProductDTO)
+                .toList();
+
+        return new ProductListResponse(list,page,size,pageResult.getTotalElements(),pageResult.getTotalPages(),pageResult.isFirst(),pageResult.isLast());
     }
 }

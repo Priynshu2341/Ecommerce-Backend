@@ -5,6 +5,8 @@ import com.example.ecommerce.dto.RatingDTO;
 import com.example.ecommerce.entity.product.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class ProductMapper {
 
@@ -19,7 +21,9 @@ public class ProductMapper {
                         product.getRating().getStars(),
                         product.getRating().getCount()
                 ),
-                product.getKeywords()
+                product.getKeywords() == null
+                        ? null
+                        : new ArrayList<>(product.getKeywords())
         );
 
 

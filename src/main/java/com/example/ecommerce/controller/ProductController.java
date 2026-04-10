@@ -2,6 +2,7 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.dto.ProductDTO;
 import com.example.ecommerce.entity.product.Product;
+import com.example.ecommerce.redis.ProductListResponse;
 import com.example.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @GetMapping("/all/page")
-    public Page<ProductDTO> findAllPage(
+    public ProductListResponse findAllPage(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "1") int size)
     {
