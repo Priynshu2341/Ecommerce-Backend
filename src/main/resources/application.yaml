@@ -6,9 +6,9 @@ spring:
     name: Ecommerce
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASS}
+    url: jdbc:postgresql://dpg-d7econcvikkc73emlj80-a.oregon-postgres.render.com/postgres1_qqvl
+    username: postgres1_qqvl_user
+    password: svPc4IFDRlzA4RZqcSN8c6wApvMhVGOZ
     driver-class-name: org.postgresql.Driver
 
   jpa:
