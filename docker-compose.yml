@@ -12,8 +12,8 @@ services:
       - "8081:8081"
 
     networks:
-      - real-time-messaging-system_chat_network
+      - realtime-chat-app-backend_chat_network
 
 networks:
-  real-time-messaging-system_chat_network:
+  realtime-chat-app-backend_chat_network:
     external: true
